@@ -1,6 +1,13 @@
 import discord
+import sys
 import random
 import os
+
+# import our class
+sys.path.append('classes')
+
+from classes import game
+Game = game.Game
 
 # Initialize the bot
 client = discord.Client()
@@ -19,33 +26,6 @@ deck = ["Ace of Hearts", "Ace of Diamonds", "Ace of Clubs", "Ace of Spades", "2 
 
 # Shuffles the deck.
 random.shuffle(deck)
-
-
-class Discord_User:
-    """
-    The user on Discord interacting with the bot.
-    """
-
-    def __init__(self, hand, matched_cards, play_turn, ask_card, matches):
-        self.hand = hand
-        self.matched_cards = matched_cards
-        self.play_turn = play_turn
-        self.ask_card = ask_card
-        self.matches = matches
-
-    def play_turn(self):
-        """
-        The user's turn.
-        """
-
-        pass
-
-    def ask_card(self, card):
-        """
-        The user's decision during their turn.
-        """
-
-        pass
 
 
 def deal_cards(deck):
