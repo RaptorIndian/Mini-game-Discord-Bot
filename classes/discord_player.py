@@ -1,24 +1,30 @@
+from util import stringify
 from classes import player, turn
 Player = player.Player
 Turn = turn.Turn
-from util import stringify
 
 # Take an input and verify that its a valid move
+
+
 def validate_input(card, hand):
     valid = False
     if card != 0:
         for i in hand:
             if i["value"] == card:
                 valid = True
-                break;
+                break
     return valid
 
 # Use discord API to register an input for the game
 # TODO
+
+
 def get_input():
     return True
 
 # Test method for getting input pre-discord integration
+
+
 def get_input_test(hand):
     handarr = []
     for i in hand:
@@ -31,7 +37,7 @@ def get_input_test(hand):
         except:
             print("Invalid selection. Input must be a number.")
     return output
-    
+
 
 class Discord_Player(Player):
     """

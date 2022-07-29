@@ -1,7 +1,8 @@
+import random
 from classes import player, turn
 Player = player.Player
 Turn = turn.Turn
-import random
+
 
 def easy_turn(other, hand):
     options = []
@@ -11,10 +12,11 @@ def easy_turn(other, hand):
         if i["value"] in options:
             continue
         options.append(i["value"])
-    
+
     card = random.choice(options)
     returned_cards = other.ask_card(card)
     return (card, returned_cards)
+
 
 def normal_turn(other, hand, history):
     options = {}
@@ -32,6 +34,7 @@ def normal_turn(other, hand, history):
 def hard_turn(other, hand, history):
     pass
 
+
 class Computer_Player(Player):
 
     def __init__(self, playerid, hand, difficulty):
@@ -44,10 +47,10 @@ class Computer_Player(Player):
         # See AI.md for a detailed breakdown on difficulty
         self.difficulty = difficulty
 
-    def play_turn(self, other, history, count, diff_override = 0):
+    def play_turn(self, other, history, count, diff_override=0):
         difficulty = diff_override or self.difficulty
 
-        print("It is " + self.id + "'s turn")
+        print(f"It is {self.id}'s turn")
 
         # Tuple containing the resulting data from AI turn
         result = (0, [])
@@ -71,4 +74,3 @@ class Computer_Player(Player):
             print("go fish...")
 
         return Turn(count, 0, result[0], result[1])
-
