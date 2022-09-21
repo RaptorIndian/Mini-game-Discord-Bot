@@ -3,7 +3,7 @@ Player = player.Player
 Turn = turn.Turn
 from util import stringify
 
-# Take an input and verify that its a valid move
+# Take an input from the player and determine if this is a legal guess to make
 def validate_input(card, hand):
     valid = False
     if card != 0:
@@ -14,7 +14,7 @@ def validate_input(card, hand):
     return valid
 
 # Use discord API to register an input for the game
-# TODO
+# TODO - Waiting on Rapta's discord implementation
 def get_input():
     return True
 
@@ -46,15 +46,19 @@ class Discord_Player(Player):
     def play_turn(self, other, turns, count):
         print("It is " + self.id + "'s turn")
 
+        # Prompt the user to select a card to guess until they input a valid move
+        # TODO - switch this over to using the discord-integrated get_input method
         card = 0
         while validate_input(card, self.hand) == False:
             #card = get_input()
             card = get_input_test(self.hand)
 
+        # Ask the other player if they have this card and get the matched cards, if any
         returned_cards = other.ask_card(card)
 
         print(self.id + " selected: " + str(card))
 
+        # If cards were given to us from the other player, add them to our hand
         if len(returned_cards) > 0:
             for i in returned_cards:
                 print(other.id + " gives a " + i["text"] + " to " + self.id)
@@ -62,4 +66,5 @@ class Discord_Player(Player):
         else:
             print("go fish...")
 
+        # Generate a Turn object based on what happened this turn
         return Turn(count, 1, card, returned_cards)
