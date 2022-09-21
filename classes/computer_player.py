@@ -3,6 +3,7 @@ Player = player.Player
 Turn = turn.Turn
 import random
 
+# Easy Turn AI
 def easy_turn(other, hand):
     options = []
 
@@ -12,10 +13,16 @@ def easy_turn(other, hand):
             continue
         options.append(i["value"])
     
+    # Randomly select card from options
     card = random.choice(options)
+    
+    # Ask for the card and get the returned cards if any
     returned_cards = other.ask_card(card)
+    
+    # return the guess and the result to calling context
     return (card, returned_cards)
 
+# TODO
 def normal_turn(other, hand, history):
     options = {}
 
@@ -29,6 +36,7 @@ def normal_turn(other, hand, history):
     # Look through 8 most recent turns
 
 
+# TODO
 def hard_turn(other, hand, history):
     pass
 
@@ -62,7 +70,7 @@ class Computer_Player(Player):
 
         print(self.id + " selected: " + str(result[0]))
 
-        # Update hand
+        # Update hand if a guess successfully returned cards
         if len(result[1]) > 0:
             for i in result[1]:
                 print(other.id + " gives a " + i["text"] + " to " + self.id)
@@ -70,5 +78,6 @@ class Computer_Player(Player):
         else:
             print("go fish...")
 
+        # Generate a Turn object based on the results of this turn
         return Turn(count, 0, result[0], result[1])
 
