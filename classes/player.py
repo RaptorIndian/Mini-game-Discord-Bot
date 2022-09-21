@@ -1,3 +1,4 @@
+# Check specified hand and find the lowest matching set of 4 cards, returing face value or 0
 def check_matches(hand):
     match = 0
     state = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -30,23 +31,16 @@ class Player:
         # Sets of cards that have been matched from the hand
         self.matched_cards = []
 
-    # Test function to verify integrity of hands
-    # TODO - delete me
-    def hand_test(self):
-        print("Hand Test for go Fish Player: " + self.id)
-        print(self.hand)
-        pass
-
     # Examine current hand and check if there are any matches
     def process_matches(self):
 
         # Initiate card match checking loop
-        match_indicies = []
-        loop = True
-        match = 0
+        match_indicies = [] # List of matched card indicies in the hand Array
+        loop = True # Keep this loop running until all matches have been found
+        match = 0 # The current matched value
         while loop:
 
-            # Return a value for matching cards, if any
+            # Return a face value for matching cards or 0 if none
             match = check_matches(self.hand)
 
             # Handle Match if there is a valid value
@@ -80,30 +74,34 @@ class Player:
             # No Match found- fallthrough kills the loop
             loop = False
 
-    # TODO optimize this mess
+    # Request a card from this players hand
     def ask_card(self, card):
         matches = []
         output = []
 
-        # Find cards in hand matching value
+        # Find cards in hand matching the guessed value and put them in the matches array
         for i in range(len(self.hand)):
             if self.hand[i]["value"] == card:
                 matches.append(i)
 
-        # Update hand and get cards if matched
+        # Remove cards from hand and assign cards to output if cards matching this guess are found
         if len(matches) > 0:
             for i in matches:
                 output.append(self.hand[i])
             for i in matches[::-1]:
                 del self.hand[i]
 
+        # Return list of matched cards to the other player
         return output
 
+    # Adds a card to the hand
     def draw(self, card):
         self.hand.append(card)
 
+    # Check if the hand is empty
     def empty_hand(self):
         return len(self.hand) == 0
-
+    
+    # Get an integer representing the total number of matched face values this player has
     def total_matches(self):
         return len(self.matched_cards)
