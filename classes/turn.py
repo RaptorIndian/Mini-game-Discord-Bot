@@ -1,3 +1,4 @@
+# Simple Data structure holding relevant details to a turn- potentially useful for turn rollback or AI move calculations
 class Turn:
     def __init__(self, turnid, player, asked, cards):
 
